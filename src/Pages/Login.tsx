@@ -3,6 +3,7 @@ import * as types from "../store/types";
 import { Dispatch } from "redux";
 import * as actions from "../store/actions";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 interface IProps {}
 interface ReduxProps {
@@ -11,34 +12,49 @@ interface ReduxProps {
 }
 
 class Login extends React.Component<IProps & ReduxProps> {
+  state = {
+    userName: "",
+    password: ""
+  };
   render() {
-    const style = {
-      alignItems: "center",
-      display: "flex",
-      height: 300
-    };
+    if (this.props.isLoggedIn) {
+      return <Redirect to="/" />;
+    }
     return (
-      <div className={"container"}>
-        <h5 className={"teal-text"}> LOGIN</h5>
-        <div className={"card-pannel z-depth-5 teal"}>
-          <div className={"container white-text"} style={style}>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum
-            </p>
-            <button
-              onClick={() => {
-                this.props.updateLoggedIn(true);
+      <div className={"container loginContainer"}>
+        <div className="loginSubContainer">
+          <h5> LOGIN </h5>
+          <div>
+            <p>Kullanıcı adı:</p>
+            <input
+              onChange={event => {
+                this.setState({ userName: event.target.value });
               }}
-            >
-              LOGIN
-            </button>
+            />
+
+            <p>Şifre: </p>
+
+            <input
+              onChange={event => {
+                this.setState({ password: event.target.value });
+              }}
+            />
           </div>
+          <button
+            style={{ marginTop: 20 }}
+            onClick={() => {
+              if (
+                this.state.password === "admin" &&
+                this.state.userName === "admin"
+              ) {
+                this.props.updateLoggedIn(true);
+              } else {
+                alert("Şifre yanlış");
+              }
+            }}
+          >
+            LOGIN
+          </button>
         </div>
       </div>
     );

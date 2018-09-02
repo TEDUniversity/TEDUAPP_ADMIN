@@ -4,6 +4,17 @@ body {
   font-family: sans-serif;
 }
 
+.container {
+  margin: 50px;
+}
+.loginContainer {
+  text-align: center;
+}
+.loginSubContainer {
+  text-align: left;
+  display: inline-block;
+  margin: 100px;
+}
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
@@ -55,5 +66,11 @@ body {
   }
   .header-right {
     float: none;
+  }
+  .container {
+    margin: 0px;
+  }
+  .loginSubContainer {
+    margin: 0px;
   }
 }
