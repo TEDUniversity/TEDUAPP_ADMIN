@@ -16,20 +16,45 @@ class AddNews extends React.Component<IProps & ReduxProps> {
     title: "",
     tarih: "",
     yazar: "",
+    type: "",
     newsArray: []
   };
 
   handleSubmit = event => {
-    alert("An essay was submitted: " + this.state.news);
+    if (
+      this.state.news === "" ||
+      this.state.title === "" ||
+      this.state.tarih === "" ||
+      this.state.yazar === "" ||
+      this.state.type === ""
+    ) {
+      alert("Lütfen boş alan bırakma");
+      return;
+    }
+    firebase
+      .database()
+      .ref("councilNews")
+      .push({
+        author: this.state.yazar,
+        content: this.state.news,
+        date: this.state.tarih,
+        header: this.state.title,
+        type: this.state.type,
+        links: [{ url: "" }]
+      });
+    this.setState({ news: "", title: "", tarih: "", yazar: "", type: "" });
     event.preventDefault();
   };
-  componentDidMount() {
+  componentWillMount() {
     firebase
       .database()
       .ref("/councilNews")
       .on("value", response => {
-        console.log(JSON.stringify(response.val()));
-        this.setState({ newsArray: response.val() });
+        let arr = [];
+        response.forEach(child => {
+          arr.push(child.val());
+          this.setState({ newsArray: arr });
+        });
       });
   }
 
@@ -87,6 +112,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
                 <label>
                   Başlık:
                   <input
+                    value={this.state.title}
                     style={{ marginLeft: 20 }}
                     onChange={e => {
                       this.setState({ title: e.target.value });
@@ -99,6 +125,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
                 <div style={{ flex: 1, margin: 10 }}>
                   <p> Haber:</p>
                   <textarea
+                    value={this.state.news}
                     style={{ height: 300, width: 900 }}
                     onChange={e => {
                       this.setState({ news: e.target.value });
@@ -110,6 +137,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
                 <label>
                   Tarih:
                   <input
+                    value={this.state.tarih}
                     style={{ marginLeft: 20 }}
                     onChange={e => {
                       this.setState({ tarih: e.target.value });
@@ -121,9 +149,22 @@ class AddNews extends React.Component<IProps & ReduxProps> {
                 <label>
                   Yazar:
                   <input
+                    value={this.state.yazar}
                     style={{ marginLeft: 20 }}
                     onChange={e => {
                       this.setState({ yazar: e.target.value });
+                    }}
+                  />
+                </label>
+              </div>
+              <div style={{ flex: 1, margin: 10 }}>
+                <label>
+                  Haber tipi:
+                  <input
+                    value={this.state.type}
+                    style={{ marginLeft: 20 }}
+                    onChange={e => {
+                      this.setState({ type: e.target.value });
                     }}
                   />
                 </label>
