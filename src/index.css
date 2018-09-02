@@ -20,6 +20,9 @@ body {
   overflow: hidden;
   background-color: #f1f1f1;
   padding: 20px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 /* Style the header links */
@@ -68,9 +71,12 @@ body {
     float: none;
   }
   .container {
-    margin: 0px;
+    margin: 10px;
   }
   .loginSubContainer {
     margin: 0px;
+  }
+  .header a {
+    padding: 6px;
   }
 }

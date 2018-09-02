@@ -5,8 +5,19 @@ import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Navigation from "./Components/Navigation";
 import Login from "./Pages/Login";
+import * as firebase from "firebase";
 
 class App extends React.Component {
+  constructor(prop: any) {
+    super(prop);
+    var config = {
+      databaseURL: "https://teduapp-210c9.firebaseio.com",
+      projectId: "teduapp-210c9"
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
+  }
   render() {
     return (
       <div>
