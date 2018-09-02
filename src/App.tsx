@@ -4,6 +4,7 @@ import { Route } from "react-router-dom";
 import Home from "./Pages/Home";
 import About from "./Pages/About";
 import Navigation from "./Components/Navigation";
+import Login from "./Pages/Login";
 
 class App extends React.Component {
   render() {
@@ -13,6 +14,7 @@ class App extends React.Component {
         {/**
          *  route to diffrent component
          */}
+        <Route exact={true} path={"/login"} component={Login} />
         <Route exact={true} path={"/"} component={Home} />
         <Route exact={true} path={"/about"} component={About} />
       </div>
