@@ -1,7 +1,7 @@
 import * as types from "./types";
 
 const initialState: types.GlobalState = {
-  loggedIn: false
+  loggedIn: true
 };
 
 export default function reducer(

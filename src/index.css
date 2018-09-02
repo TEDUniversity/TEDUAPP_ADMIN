@@ -15,12 +15,16 @@ body {
   display: inline-block;
   margin: 100px;
 }
+
+textarea {
+  max-width: 100%;
+}
 /* Style the header with a grey background and some padding */
 .header {
   overflow: hidden;
   background-color: #f1f1f1;
   padding: 20px 10px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   justify-content: space-between;
 }

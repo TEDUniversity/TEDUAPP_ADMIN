@@ -2,10 +2,10 @@ import * as React from "react";
 import { Route } from "react-router-dom";
 
 import Home from "./Pages/Home";
-import About from "./Pages/About";
 import Navigation from "./Components/Navigation";
 import Login from "./Pages/Login";
 import * as firebase from "firebase";
+import AddNews from "./Pages/AddNews";
 
 class App extends React.Component {
   constructor(prop: any) {
@@ -27,7 +27,7 @@ class App extends React.Component {
          */}
         <Route exact={true} path={"/login"} component={Login} />
         <Route exact={true} path={"/"} component={Home} />
-        <Route exact={true} path={"/about"} component={About} />
+        <Route exact={true} path={"/addnews"} component={AddNews} />
       </div>
     );
   }
