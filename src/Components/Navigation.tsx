@@ -31,6 +31,9 @@ class Navigation extends React.Component<IProps & ReduxProps> {
               <Link to={"/notifications"}>
                 <a className={"white-text"}>Bildirim ekle</a>
               </Link>
+              <Link to={"/surveys"}>
+                <a className={"white-text"}>Anket ekle</a>
+              </Link>
             </div>
           </div>
         </nav>

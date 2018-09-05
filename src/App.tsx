@@ -8,6 +8,8 @@ import * as firebase from "firebase";
 import AddNews from "./Pages/AddNews";
 import NewsDetail from "./Pages/NewsDetail";
 import AddNotification from "./Pages/AddNotification";
+import AddSurvey from "./Pages/AddSurvey";
+import SurveyDetail from "./Pages/SurveyDetail";
 
 class App extends React.Component {
   constructor(prop: any) {
@@ -27,12 +29,14 @@ class App extends React.Component {
         {/**
          *  route to diffrent component
          */}
+        <Route exact={true} path={"/surveys"} component={AddSurvey} />
         <Route
           exact={true}
           path={"/notifications"}
           component={AddNotification}
         />
         <Route exact={true} path={"/detailNews"} component={NewsDetail} />
+        <Route exact={true} path={"/detailSurvey"} component={SurveyDetail} />
         <Route exact={true} path={"/login"} component={Login} />
         <Route exact={true} path={"/"} component={Home} />
         <Route exact={true} path={"/addnews"} component={AddNews} />
