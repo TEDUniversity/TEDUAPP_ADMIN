@@ -7,6 +7,7 @@ import Login from "./Pages/Login";
 import * as firebase from "firebase";
 import AddNews from "./Pages/AddNews";
 import NewsDetail from "./Pages/NewsDetail";
+import AddNotification from "./Pages/AddNotification";
 
 class App extends React.Component {
   constructor(prop: any) {
@@ -26,6 +27,11 @@ class App extends React.Component {
         {/**
          *  route to diffrent component
          */}
+        <Route
+          exact={true}
+          path={"/notifications"}
+          component={AddNotification}
+        />
         <Route exact={true} path={"/detailNews"} component={NewsDetail} />
         <Route exact={true} path={"/login"} component={Login} />
         <Route exact={true} path={"/"} component={Home} />
