@@ -21,14 +21,16 @@ export default class Questions extends React.Component<IProps> {
       this.questionElements.push("pushed");
     }
   }
-  addQuestionToSurvey = a => {
-    let s = this.state.survey as any;
-    if (s.questions) {
-      s.questions = [];
+  addQuestionToSurvey = (a, i) => {
+    let s = this.state.survey;
+    if (
+      s.questions.length >= this.props.questionNumber ||
+      s.questions.length >= i + 1
+    ) {
+      s.questions.pop();
     }
     s.questions.push(a);
-    this.setState({ survey: s });
-    this.props.sendSurveyBack(s);
+    this.setState({ survey: s }, this.props.sendSurveyBack(this.state.survey));
   };
   takeQuestions = () => {
     return this.questionElements.map((item, id) => {

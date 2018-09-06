@@ -2,7 +2,7 @@ import * as React from "react";
 import AnswerInput from "./AnswerInput";
 
 interface IProps {
-  sendSurveyBack(q): any;
+  sendSurveyBack(q, i): any;
   index: number;
   isSent: boolean;
 }
@@ -49,7 +49,7 @@ export default class QuestionInput extends React.Component<IProps> {
       a.push({ count: 0, text: this.state.ans5 });
     }
     let q = { question: this.state.question, answers: a };
-    this.props.sendSurveyBack(q);
+    this.props.sendSurveyBack(q, this.props.index);
   };
 
   render() {
