@@ -16,8 +16,8 @@ class AddNews extends React.Component<IProps & ReduxProps> {
     title: "",
     tarih: "",
     yazar: "",
-    type: "",
-    newsArray: []
+    newsArray: [],
+    selectedDuyuruTipi: "duyuru"
   };
 
   handleSubmit = event => {
@@ -25,8 +25,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
       this.state.news === "" ||
       this.state.title === "" ||
       this.state.tarih === "" ||
-      this.state.yazar === "" ||
-      this.state.type === ""
+      this.state.yazar === ""
     ) {
       alert("Lütfen boş alan bırakma");
       return;
@@ -39,10 +38,10 @@ class AddNews extends React.Component<IProps & ReduxProps> {
         content: this.state.news,
         date: this.state.tarih,
         header: this.state.title,
-        type: this.state.type,
+        type: this.state.selectedDuyuruTipi,
         links: [{ url: "" }]
       });
-    this.setState({ news: "", title: "", tarih: "", yazar: "", type: "" });
+    this.setState({ news: "", title: "", tarih: "", yazar: "" });
     event.preventDefault();
   };
   componentWillMount() {
@@ -94,6 +93,11 @@ class AddNews extends React.Component<IProps & ReduxProps> {
         );
       });
     }
+  };
+  handleOptionChange = changeEvent => {
+    this.setState({
+      selectedDuyuruTipi: changeEvent.target.value
+    });
   };
   render() {
     if (this.props.isLoggedIn) {
@@ -156,13 +160,39 @@ class AddNews extends React.Component<IProps & ReduxProps> {
               <div style={{ flex: 1, margin: 10 }}>
                 <label>
                   Haber tipi:
-                  <input
-                    value={this.state.type}
-                    style={{ marginLeft: 20 }}
-                    onChange={e => {
-                      this.setState({ type: e.target.value });
-                    }}
-                  />
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        value="duyuru"
+                        checked={this.state.selectedDuyuruTipi === "duyuru"}
+                        onChange={this.handleOptionChange}
+                      />
+                      Duyuru
+                    </label>
+                  </div>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        value="etkinlik"
+                        checked={this.state.selectedDuyuruTipi === "etkinlik"}
+                        onChange={this.handleOptionChange}
+                      />
+                      Etkinlik
+                    </label>
+                  </div>
+                  <div className="radio">
+                    <label>
+                      <input
+                        type="radio"
+                        value="haber"
+                        checked={this.state.selectedDuyuruTipi === "haber"}
+                        onChange={this.handleOptionChange}
+                      />
+                      Haber
+                    </label>
+                  </div>
                 </label>
               </div>
               <input type="submit" value="Submit" />

@@ -12,16 +12,14 @@ export default class Home extends React.Component {
         <div style={style}>
           <div>
             <div className={"container "}>
-              <h2 className={"teal-text"}>Hello World!</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum
-              </p>
+              <h2 className={"teal-text"}>TEDUAPP Admin!</h2>
+              <p>TEDUAPP Admin sayfasına hoşgeldiniz.</p>
+              <p>İletişim:</p>
+              <p>Hayri DURMAZ</p>
+              <p>hayri.durmaz@tedu.edu.tr</p>
+              <hr />
+              <p>Arda Tümay</p>
+              <p>arda.tumay@tedu.edu.tr</p>
             </div>
           </div>
         </div>

@@ -50,6 +50,7 @@ class Login extends React.Component<IProps & ReduxProps> {
             <p>Şifre: </p>
 
             <input
+              type="password"
               onChange={event => {
                 this.setState({ password: event.target.value });
               }}
