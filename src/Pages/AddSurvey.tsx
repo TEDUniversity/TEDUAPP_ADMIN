@@ -61,9 +61,7 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
       return (
         <div key={id} style={{ border: "10px black" }}>
           <Link to={{ pathname: "/detailNews", state: { news: item } }}>
-            <a className={"white-text"}>
-              <h3>{item["header"]}</h3>
-            </a>
+            <h3>{item["header"]}</h3>
           </Link>
           <p key={id}>{"" + item["name"]}</p>
           <hr />
@@ -78,9 +76,7 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
         return (
           <div key={id} style={{ border: "10px black" }}>
             <Link to={{ pathname: "/detailSurvey", state: { news: item } }}>
-              <a className={"white-text"}>
-                <h3>{item["name"]}</h3>
-              </a>
+              <h3>{item["name"]}</h3>
             </Link>
             <p key={id}>{"" + item["name"]}</p>
             <hr />
@@ -96,9 +92,7 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
         return (
           <div key={id}>
             <Link to={{ pathname: "/detailSurvey", state: { news: item } }}>
-              <a className={"white-text"}>
-                <h3>{item["name"]}</h3>
-              </a>
+              <h3>{item["name"]}</h3>
             </Link>
             <p key={id}>{"" + item["content"]}</p>
             <hr />

@@ -17,22 +17,20 @@ class Navigation extends React.Component<IProps & ReduxProps> {
         <nav className={"deep-purple darken-1"}>
           <div className="header">
             <Link to={"/"}>
-              <a className={"white-text"}>
-                <img src="https://www.tedu.edu.tr/sites/default/files/logo_tr_1.png" />
-              </a>
+              <img src="https://www.tedu.edu.tr/sites/default/files/logo_tr_1.png" />
             </Link>
             <div className="header-right">
               <Link to={"/"}>
-                <a className={"white-text"}>Home</a>
+                <p className={"white-text"}>Anasayfa</p>
               </Link>
               <Link to={"/addnews"}>
-                <a className={"white-text"}>Haber ekle</a>
+                <p className={"white-text"}>Haber ekle</p>
               </Link>
               <Link to={"/notifications"}>
-                <a className={"white-text"}>Bildirim ekle</a>
+                <p className={"white-text"}>Bildirim ekle</p>
               </Link>
               <Link to={"/surveys"}>
-                <a className={"white-text"}>Anket ekle</a>
+                <p className={"white-text"}>Anket ekle</p>
               </Link>
             </div>
           </div>
@@ -43,16 +41,14 @@ class Navigation extends React.Component<IProps & ReduxProps> {
         <nav className={"deep-purple darken-1"}>
           <div className="header">
             <Link to={"/"}>
-              <a className={"white-text"}>
-                <img src="https://www.tedu.edu.tr/sites/default/files/logo_tr_1.png" />
-              </a>
+              <img src="https://www.tedu.edu.tr/sites/default/files/logo_tr_1.png" />
             </Link>
             <div className="header-right">
               <Link to={"/"}>
-                <a className={"white-text"}>Home</a>
+                <p className={"white-text"}>Anasayfa</p>
               </Link>
               <Link to={"/login"}>
-                <a className={"white-text"}>Log In</a>
+                <p className={"white-text"}>Giriş yap</p>
               </Link>
             </div>
           </div>

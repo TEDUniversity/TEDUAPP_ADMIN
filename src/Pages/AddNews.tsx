@@ -64,9 +64,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
         return (
           <div key={id} style={{ border: "10px black" }}>
             <Link to={{ pathname: "/detailNews", state: { news: item } }}>
-              <a className={"white-text"}>
-                <h3>{item["header"]}</h3>
-              </a>
+              <h3 className={"white-text"}>{item["header"]}</h3>
             </Link>
             <p key={id}>
               {"" + item["content"].substr(0, 30)}
@@ -85,9 +83,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
         return (
           <div key={id}>
             <Link to={{ pathname: "/detailNews", state: { news: item } }}>
-              <a className={"white-text"}>
-                <h3>{item["header"]}</h3>
-              </a>
+              <h3 className={"white-text"}>{item["header"]}</h3>
             </Link>
             <p key={id}>
               {"" + item["content"].substr(0, 30)}

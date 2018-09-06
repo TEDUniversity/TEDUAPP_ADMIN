@@ -54,7 +54,7 @@ export default class QuestionInput extends React.Component<IProps> {
 
   render() {
     return (
-      <div>
+      <div key={this.props.index}>
         <p>Soru {this.props.index + 1}: </p>
         <input
           value={this.state.question}

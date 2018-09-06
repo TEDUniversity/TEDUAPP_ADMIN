@@ -59,9 +59,7 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
       return this.state.newsArray.map((item, id) => {
         return (
           <div key={id}>
-            <a className={"white-text"}>
-              <h3>{item["header"]}</h3>
-            </a>
+            <h3>{item["header"]}</h3>
 
             <p key={id}>{"" + item["content"]}</p>
             <p>{item["date"]}</p>
@@ -78,9 +76,7 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
       return arr.map((item, id) => {
         return (
           <div key={id}>
-            <a className={"white-text"}>
-              <h3>{item["header"]}</h3>
-            </a>
+            <h3>{item["header"]}</h3>
             <p key={id}>{"" + item["content"]}</p>
             <p>{item["date"]}</p>
             <p>{item["sender"]}</p>

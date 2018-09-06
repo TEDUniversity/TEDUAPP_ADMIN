@@ -10,9 +10,7 @@ export default class SurveyDetail extends React.Component<Iprops> {
     return ans.map((item, id) => {
       return (
         <div key={id} style={{ border: "10px black" }}>
-          <a className={"white-text"}>
-            <h5>{item["text"]}</h5>
-          </a>
+          <h5>{item["text"]}</h5>
           <p key={id}>{"Cevap sayısı: " + item["count"]}</p>
         </div>
       );
