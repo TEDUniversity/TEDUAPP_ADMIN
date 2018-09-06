@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router";
 import Questions from "../Components/Questions";
 import * as firebase from "firebase";
 import { Link } from "react-router-dom";
+import ToggleButton from "react-toggle-button";
 
 interface IProps {}
 interface ReduxProps {
@@ -32,7 +33,15 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
     firebase
       .database()
       .ref("surveys")
-      .push(sur);
+      .push(sur)
+      .then(RE => {
+        sur.id = RE.getKey();
+        firebase
+          .database()
+          .ref("surveys")
+          .child(sur.id)
+          .set(sur);
+      });
     this.setState({ title: "", isSent: true });
     setTimeout(() => {
       this.setState({ isSent: false });
@@ -73,12 +82,25 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
   renderSurveys = () => {
     if (this.state.surveyArray.length <= 10) {
       return this.state.surveyArray.map((item, id) => {
+        // console.log(JSON.stringify(item));
         return (
           <div key={id} style={{ border: "10px black" }}>
             <Link to={{ pathname: "/detailSurvey", state: { news: item } }}>
               <h3>{item["name"]}</h3>
             </Link>
             <p key={id}>{"" + item["name"]}</p>
+            Gösterilsin mi:{" "}
+            <ToggleButton
+              value={item["valid"] || false}
+              onToggle={value => {
+                item["valid"] = !value;
+                firebase
+                  .database()
+                  .ref("/surveys")
+                  .child(item["id"])
+                  .set(item);
+              }}
+            />
             <hr />
           </div>
         );
