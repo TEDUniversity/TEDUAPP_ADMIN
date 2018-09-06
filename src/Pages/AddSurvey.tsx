@@ -14,9 +14,9 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
   state = {
     survey: {},
     news: "",
-    QuestionCount: 3,
+    QuestionCount: 0,
     title: "",
-
+    isSent: false,
     surveyArray: []
   };
   questionElements = [];
@@ -33,7 +33,10 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
       .database()
       .ref("surveys")
       .push(sur);
-    this.setState({ title: "" });
+    this.setState({ title: "", isSent: true });
+    setTimeout(() => {
+      this.setState({ isSent: false });
+    }, 1500);
     event.preventDefault();
   };
   componentWillMount() {
@@ -168,6 +171,7 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
                 <div style={{ flex: 1, margin: 10 }}>
                   <p> Sorular:</p>
                   <Questions
+                    isSent={this.state.isSent}
                     sendSurveyBack={this.takeSurveyBack}
                     questionNumber={this.state.QuestionCount}
                   />

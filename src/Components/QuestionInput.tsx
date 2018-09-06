@@ -4,6 +4,7 @@ import AnswerInput from "./AnswerInput";
 interface IProps {
   sendSurveyBack(q): any;
   index: number;
+  isSent: boolean;
 }
 
 export default class QuestionInput extends React.Component<IProps> {
@@ -16,7 +17,18 @@ export default class QuestionInput extends React.Component<IProps> {
     ans4: "",
     ans5: ""
   };
-
+  componentWillReceiveProps(newP: IProps) {
+    if (newP.isSent) {
+      this.setState({
+        question: "",
+        ans1: "",
+        ans2: "",
+        ans3: "",
+        ans4: "",
+        ans5: ""
+      });
+    }
+  }
   soruEkle = () => {
     if (this.state.question === "" || this.state.ans1 === "") {
       return;
