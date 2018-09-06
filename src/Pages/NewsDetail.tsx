@@ -6,8 +6,6 @@ interface Iprops {
 }
 export default class NewsDetail extends React.Component<Iprops> {
   render() {
-    console.log(this.props.location.state.news.content);
-
     return (
       <div className={"container "}>
         <h1>{this.props.location.state.news.header}</h1>
