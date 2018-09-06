@@ -2,7 +2,7 @@ import * as React from "react";
 import * as types from "../store/types";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router";
-import Login from "./Login";
+import Questions from "../Components/Questions";
 import * as firebase from "firebase";
 import { Link } from "react-router-dom";
 
@@ -12,37 +12,28 @@ interface ReduxProps {
 }
 class AddSurvey extends React.Component<IProps & ReduxProps> {
   state = {
+    survey: {},
     news: "",
+    QuestionCount: 3,
     title: "",
-    tarih: "",
-    yazar: "",
-    type: "",
+
     surveyArray: []
   };
-
+  questionElements = [];
   handleSubmit = event => {
-    if (
-      this.state.news === "" ||
-      this.state.title === "" ||
-      this.state.tarih === "" ||
-      this.state.yazar === "" ||
-      this.state.type === ""
-    ) {
+    if (this.state.title === "") {
       alert("Lütfen boş alan bırakma");
       return;
     }
+    let sur = this.state.survey as any;
+    sur.name = this.state.title;
+    sur.valid = true;
+    sur.voters = [];
     firebase
       .database()
-      .ref("councilNews")
-      .push({
-        author: this.state.yazar,
-        content: this.state.news,
-        date: this.state.tarih,
-        header: this.state.title,
-        type: this.state.type,
-        links: [{ url: "" }]
-      });
-    this.setState({ news: "", title: "", tarih: "", yazar: "", type: "" });
+      .ref("surveys")
+      .push(sur);
+    this.setState({ title: "" });
     event.preventDefault();
   };
   componentWillMount() {
@@ -56,6 +47,10 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
           this.setState({ surveyArray: arr });
         });
       });
+    for (let index = 0; index < this.state.QuestionCount; index++) {
+      let el = <p>sorular</p>;
+      this.questionElements.push(el);
+    }
   }
 
   renderQuestion = () => {
@@ -109,6 +104,21 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
       });
     }
   };
+  takeQuestions = () => {
+    return this.questionElements.map((item, id) => {
+      return item;
+    });
+  };
+  takeAQuestion = () => {
+    return (
+      <div>
+        <p>Soru input</p>
+      </div>
+    );
+  };
+  takeSurveyBack = survey => {
+    this.setState({ survey: survey });
+  };
   render() {
     if (this.props.isLoggedIn) {
       return (
@@ -130,55 +140,39 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
                   />
                 </label>
               </div>
-
+              <div style={{ flex: 1, margin: 10 }}>
+                <label>
+                  Soru sayısı:
+                  <input
+                    value={this.state.QuestionCount}
+                    style={{ marginLeft: 20 }}
+                    onChange={e => {
+                      let str = e.target.value;
+                      let i;
+                      if (parseInt(str)) {
+                        i = parseInt(str);
+                      } else {
+                        i = 0;
+                      }
+                      if (i > 100) {
+                        i = 100;
+                      }
+                      this.setState({
+                        QuestionCount: i
+                      });
+                    }}
+                  />
+                </label>
+              </div>
               <label>
                 <div style={{ flex: 1, margin: 10 }}>
-                  <p> Haber:</p>
-                  <textarea
-                    value={this.state.news}
-                    style={{ height: 300, width: 900 }}
-                    onChange={e => {
-                      this.setState({ news: e.target.value });
-                    }}
+                  <p> Sorular:</p>
+                  <Questions
+                    sendSurveyBack={this.takeSurveyBack}
+                    questionNumber={this.state.QuestionCount}
                   />
                 </div>
               </label>
-              <div style={{ flex: 1, margin: 10 }}>
-                <label>
-                  Tarih:
-                  <input
-                    value={this.state.tarih}
-                    style={{ marginLeft: 20 }}
-                    onChange={e => {
-                      this.setState({ tarih: e.target.value });
-                    }}
-                  />
-                </label>
-              </div>
-              <div style={{ flex: 1, margin: 10 }}>
-                <label>
-                  Yazar:
-                  <input
-                    value={this.state.yazar}
-                    style={{ marginLeft: 20 }}
-                    onChange={e => {
-                      this.setState({ yazar: e.target.value });
-                    }}
-                  />
-                </label>
-              </div>
-              <div style={{ flex: 1, margin: 10 }}>
-                <label>
-                  Haber tipi:
-                  <input
-                    value={this.state.type}
-                    style={{ marginLeft: 20 }}
-                    onChange={e => {
-                      this.setState({ type: e.target.value });
-                    }}
-                  />
-                </label>
-              </div>
               <input type="submit" value="Submit" />
             </form>
           </div>

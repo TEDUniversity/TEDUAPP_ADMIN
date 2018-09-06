@@ -11,7 +11,7 @@ export default class SurveyDetail extends React.Component<Iprops> {
       return (
         <div key={id} style={{ border: "10px black" }}>
           <a className={"white-text"}>
-            <h3>{item["text"]}</h3>
+            <h5>{item["text"]}</h5>
           </a>
           <p key={id}>{"Cevap sayısı: " + item["count"]}</p>
         </div>
@@ -31,7 +31,6 @@ export default class SurveyDetail extends React.Component<Iprops> {
     });
   };
   render() {
-    console.log(this.props.location.state.news);
     return (
       <div className={"container "}>
         <h1>{this.props.location.state.news.name}</h1>
