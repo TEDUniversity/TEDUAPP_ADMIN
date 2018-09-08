@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router";
 import Login from "./Login";
 import * as firebase from "firebase";
 import { Link } from "react-router-dom";
+import ToggleButton from "react-toggle-button";
 
 interface IProps {}
 interface ReduxProps {
@@ -33,16 +34,27 @@ class AddNews extends React.Component<IProps & ReduxProps> {
       return;
     }
     if (window.confirm("Haberi göndermek istediğine emin misin?")) {
+      let news = {
+        author: this.state.yazar,
+        content: this.state.news,
+        date: this.state.tarih,
+        header: this.state.title,
+        type: this.state.selectedDuyuruTipi,
+        links: [{ url: "" }],
+        id: "",
+        valid: true
+      };
       firebase
         .database()
         .ref("councilNews")
-        .push({
-          author: this.state.yazar,
-          content: this.state.news,
-          date: this.state.tarih,
-          header: this.state.title,
-          type: this.state.selectedDuyuruTipi,
-          links: [{ url: "" }]
+        .push(news)
+        .then(RE => {
+          news.id = RE.getKey();
+          firebase
+            .database()
+            .ref("councilNews")
+            .child(news.id)
+            .set(news);
         });
       this.setState({ news: "", title: "", tarih: "", yazar: "" });
     }
@@ -73,6 +85,18 @@ class AddNews extends React.Component<IProps & ReduxProps> {
               {"" + item["content"].substr(0, 30)}
               ...
             </p>
+            Gösterilsin mi:{" "}
+            <ToggleButton
+              value={item["valid"] || false}
+              onToggle={value => {
+                item["valid"] = !value;
+                firebase
+                  .database()
+                  .ref("/councilNews")
+                  .child(item["id"])
+                  .set(item);
+              }}
+            />
             <hr />
           </div>
         );
@@ -92,6 +116,18 @@ class AddNews extends React.Component<IProps & ReduxProps> {
               {"" + item["content"].substr(0, 30)}
               ...
             </p>
+            Gösterilsin mi:{" "}
+            <ToggleButton
+              value={item["valid"] || false}
+              onToggle={value => {
+                item["valid"] = !value;
+                firebase
+                  .database()
+                  .ref("/councilNews")
+                  .child(item["id"])
+                  .set(item);
+              }}
+            />
             <hr />
           </div>
         );
@@ -107,8 +143,6 @@ class AddNews extends React.Component<IProps & ReduxProps> {
     if (this.props.isLoggedIn) {
       return (
         <div className={"container"}>
-          <h1 className={"teal-text"}> Haberler</h1>
-          {this.renderNews()}
           <h1 className={"teal-text"}> Haber ekle</h1>
           <div className={"card-pannel z-depth-5 teal"}>
             <form onSubmit={this.handleSubmit}>
@@ -202,6 +236,8 @@ class AddNews extends React.Component<IProps & ReduxProps> {
               <input type="submit" value="Submit" />
             </form>
           </div>
+          <h1 className={"teal-text"}> Haberler</h1>
+          {this.renderNews()}
         </div>
       );
     } else {

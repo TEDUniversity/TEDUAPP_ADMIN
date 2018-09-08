@@ -94,8 +94,6 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
     if (this.props.isLoggedIn) {
       return (
         <div className={"container"}>
-          <h1 className={"teal-text"}> Gönderilmiş Bildirimler</h1>
-          {this.renderNews()}
           <h1 className={"teal-text"}> Bildirim ekle</h1>
           <div className={"card-pannel z-depth-5 teal"}>
             <form onSubmit={this.handleSubmit}>
@@ -151,6 +149,8 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
               <input type="submit" value="Submit" />
             </form>
           </div>
+          <h1 className={"teal-text"}> Gönderilmiş Bildirimler</h1>
+          {this.renderNews()}
         </div>
       );
     } else {

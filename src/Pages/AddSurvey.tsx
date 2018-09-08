@@ -145,8 +145,6 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
     if (this.props.isLoggedIn) {
       return (
         <div className={"container"}>
-          <h1 className={"teal-text"}> Anketler</h1>
-          {this.renderSurveys()}
           <h1 className={"teal-text"}> Anket ekle</h1>
           <div className={"card-pannel z-depth-5 teal"}>
             <form onSubmit={this.handleSubmit}>
@@ -199,6 +197,8 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
               <input type="submit" value="Submit" />
             </form>
           </div>
+          <h1 className={"teal-text"}> Anketler</h1>
+          {this.renderSurveys()}
         </div>
       );
     } else {
