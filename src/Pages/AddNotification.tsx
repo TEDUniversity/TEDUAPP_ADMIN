@@ -5,8 +5,6 @@ import { Route, Redirect } from "react-router";
 import Login from "./Login";
 import * as firebase from "firebase";
 import { Link } from "react-router-dom";
-import { confirmAlert } from "react-confirm-alert"; // Import
-import "react-confirm-alert/src/react-confirm-alert.css";
 
 interface IProps {}
 interface ReduxProps {
@@ -30,39 +28,21 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
     ) {
       alert("Lütfen boş alan bırakma");
       return;
+    } else {
+      if (window.confirm("Bildirimi göndermek istediğine emin misin?")) {
+        firebase
+          .database()
+          .ref("/notifications")
+          .push({
+            sender: this.state.sender,
+            content: this.state.content,
+            date: this.state.tarih,
+            header: this.state.title
+          });
+        this.setState({ content: "", title: "", tarih: "", sender: "" });
+        event.preventDefault();
+      }
     }
-
-    confirmAlert({
-      title: "EMİN MİSİN?",
-      message:
-        '"' +
-        this.state.content +
-        '" Bildirimi göndermek istediğine emin misin?',
-      buttons: [
-        {
-          label: "Evet",
-          onClick: () => {
-            firebase
-              .database()
-              .ref("/notifications")
-              .push({
-                sender: this.state.sender,
-                content: this.state.content,
-                date: this.state.tarih,
-                header: this.state.title
-              });
-            this.setState({ content: "", title: "", tarih: "", sender: "" });
-            event.preventDefault();
-          }
-        },
-        {
-          label: "Hayır",
-          onClick: () => {
-            return;
-          }
-        }
-      ]
-    });
   };
   componentWillMount() {
     firebase
