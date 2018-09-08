@@ -5936,6 +5936,10 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-confirm-alert@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.0.5.tgz#a450c4c773484da774298c3fa6c584f442ccfa4b"
+
 react-dev-utils@^5.0.1:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-5.0.2.tgz#7bb68d2c4f6ffe7ed1184c5b0124fcad692774d2"
@@ -6181,6 +6185,10 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+redux-persist@^5.10.0:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.10.0.tgz#5d8d802c5571e55924efc1c3a9b23575283be62b"
 
 redux@^4.0.0:
   version "4.0.0"
