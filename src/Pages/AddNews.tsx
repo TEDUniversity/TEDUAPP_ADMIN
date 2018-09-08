@@ -28,20 +28,24 @@ class AddNews extends React.Component<IProps & ReduxProps> {
       this.state.yazar === ""
     ) {
       alert("Lütfen boş alan bırakma");
+      event.preventDefault();
+
       return;
     }
-    firebase
-      .database()
-      .ref("councilNews")
-      .push({
-        author: this.state.yazar,
-        content: this.state.news,
-        date: this.state.tarih,
-        header: this.state.title,
-        type: this.state.selectedDuyuruTipi,
-        links: [{ url: "" }]
-      });
-    this.setState({ news: "", title: "", tarih: "", yazar: "" });
+    if (window.confirm("Haberi göndermek istediğine emin misin?")) {
+      firebase
+        .database()
+        .ref("councilNews")
+        .push({
+          author: this.state.yazar,
+          content: this.state.news,
+          date: this.state.tarih,
+          header: this.state.title,
+          type: this.state.selectedDuyuruTipi,
+          links: [{ url: "" }]
+        });
+      this.setState({ news: "", title: "", tarih: "", yazar: "" });
+    }
     event.preventDefault();
   };
   componentWillMount() {

@@ -27,6 +27,7 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
       this.state.sender === ""
     ) {
       alert("Lütfen boş alan bırakma");
+      event.preventDefault();
       return;
     } else {
       if (window.confirm("Bildirimi göndermek istediğine emin misin?")) {
@@ -40,8 +41,8 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
             header: this.state.title
           });
         this.setState({ content: "", title: "", tarih: "", sender: "" });
-        event.preventDefault();
       }
+      event.preventDefault();
     }
   };
   componentWillMount() {

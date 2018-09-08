@@ -24,28 +24,31 @@ class AddSurvey extends React.Component<IProps & ReduxProps> {
   handleSubmit = event => {
     if (this.state.title === "") {
       alert("Lütfen boş alan bırakma");
+      event.preventDefault();
       return;
     }
-    let sur = this.state.survey as any;
-    sur.name = this.state.title;
-    sur.valid = true;
-    sur.voters = [];
-    firebase
-      .database()
-      .ref("surveys")
-      .push(sur)
-      .then(RE => {
-        sur.id = RE.getKey();
-        firebase
-          .database()
-          .ref("surveys")
-          .child(sur.id)
-          .set(sur);
-      });
-    this.setState({ title: "", isSent: true });
-    setTimeout(() => {
-      this.setState({ isSent: false });
-    }, 1500);
+    if (window.confirm("Anketi göndermek istediğine emin misin?")) {
+      let sur = this.state.survey as any;
+      sur.name = this.state.title;
+      sur.valid = true;
+      sur.voters = [];
+      firebase
+        .database()
+        .ref("surveys")
+        .push(sur)
+        .then(RE => {
+          sur.id = RE.getKey();
+          firebase
+            .database()
+            .ref("surveys")
+            .child(sur.id)
+            .set(sur);
+        });
+      this.setState({ title: "", isSent: true });
+      setTimeout(() => {
+        this.setState({ isSent: false });
+      }, 1500);
+    }
     event.preventDefault();
   };
   componentWillMount() {
