@@ -32,6 +32,9 @@ class Navigation extends React.Component<IProps & ReduxProps> {
               <Link to={"/surveys"}>
                 <p className={"white-text"}>Anket ekle</p>
               </Link>
+              <Link to={"/logout"}>
+                <p className={"white-text"}>Çıkış yap</p>
+              </Link>
             </div>
           </div>
         </nav>

@@ -10,6 +10,7 @@ import NewsDetail from "./Pages/NewsDetail";
 import AddNotification from "./Pages/AddNotification";
 import AddSurvey from "./Pages/AddSurvey";
 import SurveyDetail from "./Pages/SurveyDetail";
+import Logout from "./Components/Logout";
 
 class App extends React.Component {
   constructor(prop: any) {
@@ -40,6 +41,7 @@ class App extends React.Component {
         <Route exact={true} path={"/login"} component={Login} />
         <Route exact={true} path={"/"} component={Home} />
         <Route exact={true} path={"/addnews"} component={AddNews} />
+        <Route exact={true} path={"/logout"} component={Logout} />
       </div>
     );
   }
