@@ -1,11 +1,16 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import * as types from "../store/types";
+import { connect } from "react-redux";
 
 interface Iprops {
   news: any;
   location: any;
 }
-export default class SurveyDetail extends React.Component<Iprops> {
+interface ReduxProps {
+  isLoggedIn?: boolean;
+}
+class SurveyDetail extends React.Component<Iprops & ReduxProps> {
   renderAnswers = ans => {
     return ans.map((item, id) => {
       return (
@@ -29,11 +34,23 @@ export default class SurveyDetail extends React.Component<Iprops> {
     });
   };
   render() {
-    return (
-      <div className={"container "}>
-        <h1>{this.props.location.state.news.name}</h1>
-        <span style={{ whiteSpace: "pre-line" }}>{this.renderQuestion()}</span>
-      </div>
-    );
+    if (this.props.isLoggedIn) {
+      return (
+        <div className={"container "}>
+          <h1>{this.props.location.state.news.name}</h1>
+          <span style={{ whiteSpace: "pre-line" }}>
+            {this.renderQuestion()}
+          </span>
+        </div>
+      );
+    } else {
+      return <Redirect to="/login" />;
+    }
   }
 }
+
+const mapStateToProps = (state: types.GlobalState) => ({
+  isLoggedIn: state.loggedIn
+});
+
+export default connect<{}, {}, ReduxProps>(mapStateToProps)(SurveyDetail);
