@@ -17,11 +17,13 @@ class App extends React.Component {
     super(prop);
     var config = {
       databaseURL: "https://teduapp-210c9.firebaseio.com",
-      projectId: "teduapp-210c9"
+      projectId: "teduapp-210c9",
+      apikey: "AIzaSyA1mZtQ1X-R-ftJKSHPoHXydyzetDkfnow",
+      storageBucket: "teduapp-210c9.appspot.com"
     };
-    if (!firebase.apps.length) {
-      firebase.initializeApp(config);
-    }
+    firebase.initializeApp(config);
+    // if (!firebase.apps.length) {
+    // }
   }
   render() {
     return (

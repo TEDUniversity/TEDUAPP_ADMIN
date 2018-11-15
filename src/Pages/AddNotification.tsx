@@ -5,6 +5,7 @@ import { Route, Redirect } from "react-router";
 import Login from "./Login";
 import * as firebase from "firebase";
 import { Link } from "react-router-dom";
+import { getDate } from "../utils/utils";
 
 interface IProps {}
 interface ReduxProps {
@@ -46,6 +47,8 @@ class AddNotification extends React.Component<IProps & ReduxProps> {
     }
   };
   componentWillMount() {
+    this.setState({ tarih: getDate() });
+
     firebase
       .database()
       .ref("/notifications")

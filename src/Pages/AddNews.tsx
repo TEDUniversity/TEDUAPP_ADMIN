@@ -6,6 +6,9 @@ import Login from "./Login";
 import * as firebase from "firebase";
 import { Link } from "react-router-dom";
 import ToggleButton from "react-toggle-button";
+import { getDate } from "../utils/utils";
+import FileUploader from "react-firebase-file-uploader";
+var ProgressBar = require("react-progressbar").default;
 
 interface IProps {}
 interface ReduxProps {
@@ -16,18 +19,16 @@ class AddNews extends React.Component<IProps & ReduxProps> {
     news: "",
     title: "",
     tarih: "",
-    yazar: "",
+    yazar: "Öğrenci Konseyi",
     newsArray: [],
-    selectedDuyuruTipi: "duyuru"
+    selectedDuyuruTipi: "duyuru",
+    imgUrl: "",
+    isUploading: false,
+    progress: 0
   };
 
   handleSubmit = event => {
-    if (
-      this.state.news === "" ||
-      this.state.title === "" ||
-      this.state.tarih === "" ||
-      this.state.yazar === ""
-    ) {
+    if (this.state.news === "" || this.state.title === "") {
       alert("Lütfen boş alan bırakma");
       event.preventDefault();
 
@@ -42,7 +43,8 @@ class AddNews extends React.Component<IProps & ReduxProps> {
         type: this.state.selectedDuyuruTipi,
         links: [{ url: "" }],
         id: "",
-        valid: true
+        valid: true,
+        image: this.state.imgUrl
       };
       firebase
         .database()
@@ -56,11 +58,12 @@ class AddNews extends React.Component<IProps & ReduxProps> {
             .child(news.id)
             .set(news);
         });
-      this.setState({ news: "", title: "", tarih: "", yazar: "" });
+      this.setState({ news: "", title: "" });
     }
     event.preventDefault();
   };
   componentWillMount() {
+    this.setState({ tarih: getDate() });
     firebase
       .database()
       .ref("/councilNews")
@@ -139,7 +142,40 @@ class AddNews extends React.Component<IProps & ReduxProps> {
       selectedDuyuruTipi: changeEvent.target.value
     });
   };
+
+  handleUploadStart = () => this.setState({ isUploading: true, progress: 0 });
+  handleProgress = progress => this.setState({ progress });
+  handleUploadError = error => {
+    this.setState({ isUploading: false });
+    console.error(error);
+  };
+  handleUploadSuccess = filename => {
+    this.setState({ avatar: filename, progress: 100, isUploading: false });
+    firebase
+      .storage()
+      .ref("images")
+      .child(filename)
+      .getDownloadURL()
+      .then(url => this.setState({ imgUrl: url }));
+  };
+
   render() {
+    let progressing;
+    if (this.state.isUploading || this.state.progress === 100) {
+      progressing = (
+        <div
+          style={{
+            width: 150,
+            borderStyle: "solid",
+            borderColor: "green"
+          }}
+        >
+          <ProgressBar completed={this.state.progress} />
+        </div>
+      );
+    } else {
+      progressing = <div />;
+    }
     if (this.props.isLoggedIn) {
       return (
         <div className={"container"}>
@@ -174,13 +210,7 @@ class AddNews extends React.Component<IProps & ReduxProps> {
               <div style={{ flex: 1, margin: 10 }}>
                 <label>
                   Tarih:
-                  <input
-                    value={this.state.tarih}
-                    style={{ marginLeft: 20 }}
-                    onChange={e => {
-                      this.setState({ tarih: e.target.value });
-                    }}
-                  />
+                  <input value={this.state.tarih} style={{ marginLeft: 20 }} />
                 </label>
               </div>
               <div style={{ flex: 1, margin: 10 }}>
@@ -188,13 +218,29 @@ class AddNews extends React.Component<IProps & ReduxProps> {
                   Yazar:
                   <input
                     value={this.state.yazar}
+                    contentEditable={true}
                     style={{ marginLeft: 20 }}
-                    onChange={e => {
-                      this.setState({ yazar: e.target.value });
-                    }}
                   />
                 </label>
               </div>
+
+              <div style={{ flex: 1, margin: 10 }}>
+                <label>
+                  Resim:
+                  <FileUploader
+                    accept="image/*"
+                    name="avatar"
+                    randomizeFilename
+                    storageRef={firebase.storage().ref("images")}
+                    onUploadStart={this.handleUploadStart}
+                    onUploadError={this.handleUploadError}
+                    onUploadSuccess={this.handleUploadSuccess}
+                    onProgress={this.handleProgress}
+                  />
+                  {progressing}
+                </label>
+              </div>
+
               <div style={{ flex: 1, margin: 10 }}>
                 <label>
                   Haber tipi:
