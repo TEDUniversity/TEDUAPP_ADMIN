@@ -10,9 +10,9 @@ export const helloWorld = functions.https.onRequest((request, response) => {
 
 exports.sendPush = functions.database
   .ref("/notifications/{pushId}")
-  .onWrite(event => {
+  .onWrite((change, context) => {
     console.log("Push notification event triggered");
-    const valueObject = event.after.val();
+    const valueObject = change.after.val();
 
     console.log("valueObject.header: " + valueObject.header);
     console.log("valueObject.content: " + valueObject.content);
